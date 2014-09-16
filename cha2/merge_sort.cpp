@@ -5,9 +5,38 @@
 
 using namespace std;
 
+void merge_sort(int *A, int p, int q, int r){
+    int i = 0;
+    int left[q - p];
+    int right[r - q + 1];
+    
+    //Left is going to scan indices from p to q - 1
+    for (i = 0; i < q - p; i ++)
+        Left[i] = A[i + p];
+
+    //Right is going to scan indices from q to r
+    for (j = 0; j < r - q + 1; j ++)
+        Right[i] = A[i + q];
+
+    int j = 0;
+    int k = 0;
+
+    for (i = p; i < r + 1; i ++)
+        if (Left[j] >= Right[k]){
+            A[i] = Right[j];
+            j ++;
+        } else {
+            A[i] = Left[k];
+            k++;
+        }
+
+    merge_sort(A,p,q/2,r/2);
+    merge_sort(A,q/2+1,(r-q)/2+q,r);
+}
+
 int main(){
     //length of the array
-    const int num = 300;
+    const int num = 3;
     //random generator seed
     srand(time(0));
     //time generation
