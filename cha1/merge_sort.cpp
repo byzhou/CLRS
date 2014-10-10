@@ -1,14 +1,17 @@
-#include<iostream>
-#include<cstdlib>
-#include<ctime>
-#include<time.h>
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <time.h>
+#include <stdio.h>
 
 using namespace std;
 
 void merge_sort(int *A, int p, int q, int r){
+    int j = 0;
+    int k = 0;
     int i = 0;
-    int left[q - p];
-    int right[r - q + 1];
+    int Left[q - p];
+    int Right[r - q + 1];
     
     //Left is going to scan indices from p to q - 1
     for (i = 0; i < q - p; i ++)
@@ -18,8 +21,6 @@ void merge_sort(int *A, int p, int q, int r){
     for (j = 0; j < r - q + 1; j ++)
         Right[i] = A[i + q];
 
-    int j = 0;
-    int k = 0;
 
     for (i = p; i < r + 1; i ++)
         if (Left[j] >= Right[k]){
@@ -36,7 +37,7 @@ void merge_sort(int *A, int p, int q, int r){
 
 int main(){
     //length of the array
-    const int num = 3;
+    const int num = 1333;
     //random generator seed
     srand(time(0));
     //time generation
