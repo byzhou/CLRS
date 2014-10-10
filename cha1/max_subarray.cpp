@@ -101,6 +101,7 @@ struct left_right max_subarray ( int* array , int left , int right ) {
 
 
 int main(){
+    struct left_right       = tmp ;
     //length of the array
     const int num = 3;
     //random generator seed
@@ -125,17 +126,20 @@ int main(){
 
     long double key;
     //record start time
-    
+    tmp = max_subarray(array , 0 , num * num - 1 ) ;
+    print_array ( array + tmp.left,  , tmp.right - tmp.left + 1 ) ;
     //record end time
     printf( "The time spent on the array sorting is: %4.2f \n", (float)( clock() - t) / CLOCKS_PER_SEC );
     cout<<"The array has been sorted."<<endl;
 
     //print the sorted array
+    /*  
     for ( i = 0; i < num; i++ ) {
           for ( j = 0 ; j < num ; j++ ) {
             printf( "array %d value is %d \n", i * num + j , array[i * num + j] ) ;
           }
     }
+    */
     
     return 0;
 }
