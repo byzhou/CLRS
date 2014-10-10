@@ -18,6 +18,7 @@ struct left_right {
     int right ;
     int sum ;
 };
+
 /*  For a given array, this function print out the array's
  *  elements.
  */
@@ -81,15 +82,21 @@ struct left_right max_subarray ( int* array , int left , int right ) {
     struct left_rigth   tmp ;
     tmp.left            = left ;
     tmp.right           = right ;
+    tmp.sum             = array[left] ;
 
     if (left == right)
         return tmp ;
     else {
-        left_sum        = max_subarray ( array , left , mid ) ;
-        right_sum       = max_subarray ( array , mid , right ) ;
-        mid_sum         = max_cross_subarray ( array , left , mid , right ) ;
+        left_sum        = max_subarray ( array , left , mid ) . sum ;
+        right_sum       = max_subarray ( array , mid , right ) . sum ;
+        mid_sum         = max_cross_subarray ( array , left , mid , right ) . sum ;
+        if ( ( left_sum >= right_sum ) && ( left_sum >= mid_sum ) )
+            return max_subarray ( array , left , mid ) ;
+        if ( ( right_sum >= left_sum ) && ( right_sum >= mid_sum ) )
+            return max_subarray ( array , mid , right ) ;
+        if ( ( mid_sum >= left_sum ) && ( mid_sum >= right_sum ) )
+            return max_cross_subarray ( array , left , mid , right ) ;
     }
-    return tmp ;
 }
 
 
@@ -107,35 +114,26 @@ int main(){
 
     //record start time
     t = clock();
-    for ( i = 0; i < num; i++){
-          for ( j = 0; j < num; j++){
-            array[i*num+j]=rand()/1000000;
-            printf("array %d value is %d \n", i*num+j, array[i*num+j]);
+    for ( i = 0; i < num; i++ ) {
+          for ( j = 0; j < num; j ++ ) {
+            array[i * num + j]      = rand() / 1000000 ;
+            printf( "array %d value is %d \n", i*num + j, array[i * num + j] ) ;
           }
     }
 
-    printf("The time spent on the array generation is: %4.2f \n", (float)( clock() - t) / CLOCKS_PER_SEC);    
+    printf( "The time spent on the array generation is: %4.2f \n", (float)( clock() - t) / CLOCKS_PER_SEC ) ;    
 
     long double key;
     //record start time
-    t = clock();
-    for (i = num*num-2; i >= 0; i--){
-        key = array[i];
-        j=i+1;
-        while ((j < num*num) && (array[j] < key)){
-            array[j-1]=array[j];
-            j=j+1;
-        }
-        array[j-1]=key;
-    }
+    
     //record end time
-    printf("The time spent on the array sorting is: %4.2f \n", (float)( clock() - t) / CLOCKS_PER_SEC);
+    printf( "The time spent on the array sorting is: %4.2f \n", (float)( clock() - t) / CLOCKS_PER_SEC );
     cout<<"The array has been sorted."<<endl;
 
     //print the sorted array
-    for ( i = 0; i < num; i++){
-          for ( j = 0; j < num; j++){
-            printf("array %d value is %d \n", i*num+j, array[i*num+j]);
+    for ( i = 0; i < num; i++ ) {
+          for ( j = 0 ; j < num ; j++ ) {
+            printf( "array %d value is %d \n", i * num + j , array[i * num + j] ) ;
           }
     }
     
