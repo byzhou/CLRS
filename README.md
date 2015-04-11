@@ -1,1 +1,2 @@
-This is a test file.
+- [x] This is a complete item
+- [ ] This is an incomplete item
