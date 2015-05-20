@@ -19,4 +19,4 @@ run: main
 	./main
 
 clean:
-	rm -rf *.o
+	rm -rf *.o main merge_sort
