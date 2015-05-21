@@ -32,3 +32,10 @@ bool test_array_been_sorted ( int* randomArray , int sizeOfArray ) {
     }
     return true ;
 }
+
+void copy_array ( int* targetArray , int* sourceArray , int sizeOfArray ) {
+
+    for ( int i = 0 ; i < sizeOfArray ; i ++ ) 
+        targetArray[i] = sourceArray[i] ;
+
+}

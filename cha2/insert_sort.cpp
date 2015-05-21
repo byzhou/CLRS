@@ -7,7 +7,7 @@ int main () {
 
     // initializing test array
     int*    testArray ;
-    int     sizeOfTestArray  = 10 ; 
+    int     sizeOfTestArray  = 100000 ; 
     int     inserted_num ;
     testArray = new int [sizeOfTestArray]  ;
 

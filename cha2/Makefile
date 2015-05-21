@@ -30,9 +30,9 @@ run_merge_sort: merge_sort
 	./merge_sort
 
 run_insert_sort: insert_sort
-	./insert_sort
+	time ./insert_sort
 
-run: run_insert_sort
+run: run_merge_sort
 
 clean:
 	rm -rf *.o main merge_sort insert_sort
