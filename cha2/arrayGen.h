@@ -11,4 +11,8 @@ void integer_random_number_generator ( int* randomArray , int sizeOfArray ) ;
 // double random number generator
 void double_random_number_generator ( int* randomArray , int sizeOfArray ) ;
 
+// print all the array
+void print_array ( int* randomArray , int sizeOfArray ) ;
+
+bool test_array_been_sorted ( int* randomArray , int sizeOfArray ) ;
 #endif

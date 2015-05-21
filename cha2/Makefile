@@ -1,7 +1,12 @@
+flags:= -fpermissive
+
 all:run
 
 merge_sort.o:
 	~/colorg++ -c merge_sort.cpp 
+
+insert_sort.o:
+	~/colorg++ -c insert_sort.cpp 
 
 arrayGen.o:
 	~/colorg++ -c arrayGen.cpp
@@ -15,8 +20,19 @@ main: main.o arrayGen.o
 merge_sort: merge_sort.o arrayGen.o
 	~/colorg++ merge_sort.o arrayGen.o -o merge_sort
 
-run: main
+insert_sort: insert_sort.o arrayGen.o
+	~/colorg++ insert_sort.o arrayGen.o -o insert_sort
+
+run_main: main
 	./main
 
+run_merge_sort: merge_sort
+	./merge_sort
+
+run_insert_sort: insert_sort
+	./insert_sort
+
+run: run_insert_sort
+
 clean:
-	rm -rf *.o main merge_sort
+	rm -rf *.o main merge_sort insert_sort

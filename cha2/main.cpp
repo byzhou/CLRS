@@ -8,6 +8,5 @@ int main () {
     test = new int (4 * sizeof ( int ) )  ;
 
     integer_random_number_generator ( test, 4 )  ;
-    printf ( "test" ) ;
     printf ( " hello world \n" ) ;
 }
