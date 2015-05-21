@@ -19,6 +19,7 @@ int main () {
     int     hierarchyDepth = ( int ) ceil ( log2 ( sizeOfTestArray ) ) ;
     int     mergeTimes  = 0 ;
     int     mergeLength = 0 ;
+    int     swapTmp     = 0 ;
 
     // random generation
     integer_random_number_generator ( testArray , sizeOfTestArray ) ;
@@ -29,7 +30,21 @@ int main () {
 
     // depth for loop
     printf ( " Start Sorting ... \n " ) ;
-    for ( i = 0 ; i <= hierarchyDepth ; i ++ ) {
+
+    // first round sorting
+    for ( i = 0 ; i < sizeOfTestArray ; i += 2 ) {
+        if ( testArray[i] > testArray[i + 1] ) {
+            swapTmp             = testArray[i + 1] ;
+            testArray[i + 1]    = testArray[i] ;
+            testArray[i]        = swapTmp ;
+        }
+    }
+
+    printf ( "This is 0th round!\n " ) ;
+    print_array ( testArray , sizeOfTestArray ) ;
+
+    // second round and so on
+    for ( i = 1 ; i <= hierarchyDepth ; i ++ ) {
         printf ( " Start %dth layer Sorting ... \n " , i ) ;
         // for each depth the number of merging times is determined
         mergeTimes  = ceil ( sizeOfTestArray / pow ( 2 , i ) ) ;
@@ -50,16 +65,29 @@ int main () {
                 break ;
                 printf ( "case 1 \n" ) ;
             // if the two source pointers are targeting the end of the sequences
-            } else if ( ( ( k + 1 ) % ( 2 * mergeLength ) == 0 ) && 
-                        ( ( m + 1 ) % ( 2 * mergeLength ) == 0 ) ) {
+            } else if ( ( ( k % mergeLength )         == 0 ) && 
+                            m % ( 2 * mergeLength )   == 0 ) {
             
                 // if one sub string has been merged
-                k += ( mergeLength + 1 ) ;
-                m += ( mergeLength + 1 ) ;
+                k += ( mergeLength ) ;
+                m += ( mergeLength ) ;
 
                 printf ( "case 2 \n" ) ;
 
-            // merge
+            // if the one of two source pointers are targeting the end of the sequences
+            } else if ( ( ( k % mergeLength )         == 0 ) && 
+                            m % ( 2 * mergeLength )   != 0 ) {
+                    mergedArrary[j] = testArray[m] ;
+                    m++ ;
+                printf ( "case 3 \n" ) ;
+
+            // if the one of two source pointers are targeting the end of the sequences
+            } else if ( ( ( k % mergeLength )         != 0 ) && 
+                            m % ( 2 * mergeLength )   == 0 ) {
+                    mergedArrary[j] = testArray[k] ;
+                    k++ ;
+                printf ( "case 4 \n" ) ;
+            
             } else {
 
                 // k is the first source sub-array's pointer
@@ -72,7 +100,7 @@ int main () {
                     k++ ;
                 }
 
-                printf ( "case 3 \n" ) ;
+                printf ( "case 5 \n" ) ;
 
             }
 
@@ -83,7 +111,6 @@ int main () {
         print_array ( mergedArrary , sizeOfTestArray ) ;
         
     }
-
 
     // after sorting
     printf ( "This is after sorting.\n" ) ;
