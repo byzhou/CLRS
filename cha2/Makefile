@@ -1,4 +1,3 @@
-flags:= -fpermissive
 
 all:run
 

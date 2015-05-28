@@ -61,33 +61,51 @@ int main () {
             printf ( "k=%d, m=%d\n" , k , m ) ;
             
             // Firstly, we need to check whether the pointer is out of bound
-            if ( ( k >= sizeOfTestArray ) && ( m >= sizeOfTestArray ) ) {
+            // If it is out of bound, we just stop the loop
+            if ( ( k >= ( sizeOfTestArray - 1 ) ) && 
+                 ( m >= ( sizeOfTestArray - 1 ) ) ) {
                 break ;
                 printf ( "case 1 \n" ) ;
-            // if the two source pointers are targeting the end of the sequences
-            } else if ( ( ( k % mergeLength )         == 0 ) && 
-                            m % ( 2 * mergeLength )   == 0 ) {
-            
-                // if one sub string has been merged
-                k += ( mergeLength ) ;
-                m += ( mergeLength ) ;
 
-                printf ( "case 2 \n" ) ;
+            // if one of the two source pointers are out of bound
+            // k is in the array, m is out of the array
+            } else if ( ( k <= ( sizeOfTestArray - 1 ) ) && 
+                        ( m >= ( sizeOfTestArray - 1 ) ) ) {
+                break; 
+            // m is in the array, k is out of the array
+            } else if ( ( m <= ( sizeOfTestArray - 1 ) ) && 
+                        ( k >= ( sizeOfTestArray - 1 ) ) ) {
+                break; 
+            // one of the sequences is shorter than the other and it reaches the
+            // end while the other does not
 
+            } else if ( ( ( ( k + 1 ) % mergeLength )         == 0 ) && 
+                            ( k == ( sizeOfTestArray - 1 )  ) &&
+                            ( m + 1 ) % ( 2 * mergeLength )   != 0 ) {
             // if the one of two source pointers are targeting the end of the sequences
-            } else if ( ( ( k % mergeLength )         == 0 ) && 
-                            m % ( 2 * mergeLength )   != 0 ) {
+            } else if ( ( ( ( k + 1 ) % mergeLength )         == 0 ) && 
+                            ( m + 1 ) % ( 2 * mergeLength )   != 0 ) {
                     mergedArrary[j] = testArray[m] ;
                     m++ ;
                 printf ( "case 3 \n" ) ;
 
             // if the one of two source pointers are targeting the end of the sequences
-            } else if ( ( ( k % mergeLength )         != 0 ) && 
-                            m % ( 2 * mergeLength )   == 0 ) {
+            } else if ( ( ( ( k + 1 ) % mergeLength )         != 0 ) && 
+                            ( m + 1 ) % ( 2 * mergeLength )   == 0 ) {
                     mergedArrary[j] = testArray[k] ;
                     k++ ;
                 printf ( "case 4 \n" ) ;
+
+            // if the two source pointers are targeting the end of the sequences
+            } else if ( ( ( ( k + 1 ) % mergeLength )         == 0 ) && 
+                            ( m + 1 ) % ( 2 * mergeLength )   == 0 ) {
             
+                // if one sub string has been merged
+                k += ( mergeLength + 1 ) ;
+                m += ( mergeLength + 1 ) ;
+
+                printf ( "case 2 \n" ) ;
+
             } else {
 
                 // k is the first source sub-array's pointer
