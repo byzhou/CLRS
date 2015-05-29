@@ -2,6 +2,79 @@
 // in order to calculate the depth, I need math
 #include <math.h>
 
+int* merge_sort ( int* startOfFirstArray , int* startOfSecondArray ,
+                    int sizeOfFirstArray , int  sizeOfSecondArray ) {
+    // some counters 
+    int     i=0 , j=0 , k=0 ;
+
+    // initialization
+    int*    targetArray ;
+    int     totalLength = sizeOfFirstArray + sizeOfSecondArray ;
+
+    targetArray     = new int [ totalLength ] ;
+
+    // printf ( " Start Merging\n " ) ;
+    // printf ( " size of the first array %d \t " , sizeOfFirstArray ) ;
+    // printf ( " size of the second array %d \n " , sizeOfSecondArray ) ;
+
+    if ( startOfFirstArray == startOfSecondArray ) {
+        // printf ( " Stop Merging\n" ) ;
+        // print_array ( startOfFirstArray , 1 )  ;
+        return startOfFirstArray ;
+    } else {
+    
+        merge_sort ( startOfFirstArray , 
+                     startOfFirstArray + ( int ) floor ( sizeOfFirstArray / 2 ) , 
+                     ( int ) floor ( sizeOfFirstArray / 2 ) , 
+                     sizeOfFirstArray - ( int ) floor ( sizeOfFirstArray / 2 ) 
+                     ) ;
+        
+        merge_sort ( startOfSecondArray , 
+                     startOfSecondArray + ( int ) floor ( sizeOfSecondArray / 2 ) , 
+                     ( int ) floor ( sizeOfSecondArray / 2 ) , 
+                     sizeOfSecondArray - ( ( int ) floor ( sizeOfSecondArray / 2 ) )
+                     ) ;
+    
+    }
+
+    // i is the counter of the target array
+    for ( i = 0 ; i < totalLength ; i ++ ) {
+        // j is the counter of the first array , k is the counter 
+        // of the second array.
+        if ( j == sizeOfFirstArray ) {
+            // the end of the first array
+            targetArray [i] = startOfSecondArray [k] ;
+            k++;
+            // printf ( " case 1 \n " ) ;
+        } else if ( k == sizeOfSecondArray ) {
+            // the end of the second array
+            targetArray [i] = startOfFirstArray [j] ;
+            j++;
+            // printf ( " case 2 \n " ) ;
+        } else if ( startOfFirstArray [j] < startOfSecondArray [k] ) {
+            // common situation just do the comparison and move the pointer
+            targetArray [i] = startOfFirstArray [j];
+            j++;
+            // printf ( " case 3 \n " ) ;
+        } else {
+            // common situation just do the comparison and move the pointer
+            targetArray [i] = startOfSecondArray [k];
+            k++;
+            // printf ( " case 4 \n " ) ;
+        }
+
+    }
+
+    // suppose that the two arrays are consecutive
+    copy_array ( startOfFirstArray , targetArray , totalLength ) ;
+
+    // printf ( " Merging Completed. Target length is %d.\n " , totalLength ) ;
+    // print_array ( startOfFirstArray , totalLength ) ;
+
+    delete[] targetArray ;
+
+}
+
 int main () {
 
     // counters 
@@ -11,9 +84,7 @@ int main () {
     int*    testArray ;
     int     sizeOfTestArray  = 10 ; 
     int     inserted_num ;
-    int*    mergedArrary ;
     testArray           = new int [sizeOfTestArray]  ;
-    mergedArrary        = new int [sizeOfTestArray]  ;
 
     // set the depth
     int     hierarchyDepth = ( int ) ceil ( log2 ( sizeOfTestArray ) ) ;
@@ -31,117 +102,22 @@ int main () {
     // depth for loop
     printf ( " Start Sorting ... \n " ) ;
 
-    // first round sorting
-    for ( i = 0 ; i < sizeOfTestArray ; i += 2 ) {
-        if ( testArray[i] > testArray[i + 1] ) {
-            swapTmp             = testArray[i + 1] ;
-            testArray[i + 1]    = testArray[i] ;
-            testArray[i]        = swapTmp ;
-        }
-    }
-
-    printf ( "This is 0th round!\n " ) ;
-    print_array ( testArray , sizeOfTestArray ) ;
-
-    // second round and so on
-    for ( i = 1 ; i <= hierarchyDepth ; i ++ ) {
-        printf ( " Start %dth layer Sorting ... \n " , i ) ;
-        // for each depth the number of merging times is determined
-        mergeTimes  = ceil ( sizeOfTestArray / pow ( 2 , i ) ) ;
-        mergeLength = pow ( 2 , i ) ;
-
-        // k is the first source sub-array's pointer
-        // m is the second source sub-array's pointer
-        k           = 0 ;
-        m           = mergeLength ;
-        
-        // j is the target array's pointer
-        for ( j = 0 ; j < sizeOfTestArray ; j ++ ) {
-
-            printf ( "k=%d, m=%d\n" , k , m ) ;
-            
-            // Firstly, we need to check whether the pointer is out of bound
-            // If it is out of bound, we just stop the loop
-            if ( ( k >= ( sizeOfTestArray - 1 ) ) && 
-                 ( m >= ( sizeOfTestArray - 1 ) ) ) {
-                break ;
-                printf ( "case 1 \n" ) ;
-
-            // if one of the two source pointers are out of bound
-            // k is in the array, m is out of the array
-            } else if ( ( k <= ( sizeOfTestArray - 1 ) ) && 
-                        ( m >= ( sizeOfTestArray - 1 ) ) ) {
-                break; 
-            // m is in the array, k is out of the array
-            } else if ( ( m <= ( sizeOfTestArray - 1 ) ) && 
-                        ( k >= ( sizeOfTestArray - 1 ) ) ) {
-                break; 
-            // one of the sequences is shorter than the other and it reaches the
-            // end while the other does not
-
-            } else if ( ( ( ( k + 1 ) % mergeLength )         == 0 ) && 
-                            ( k == ( sizeOfTestArray - 1 )  ) &&
-                            ( m + 1 ) % ( 2 * mergeLength )   != 0 ) {
-            // if the one of two source pointers are targeting the end of the sequences
-            } else if ( ( ( ( k + 1 ) % mergeLength )         == 0 ) && 
-                            ( m + 1 ) % ( 2 * mergeLength )   != 0 ) {
-                    mergedArrary[j] = testArray[m] ;
-                    m++ ;
-                printf ( "case 3 \n" ) ;
-
-            // if the one of two source pointers are targeting the end of the sequences
-            } else if ( ( ( ( k + 1 ) % mergeLength )         != 0 ) && 
-                            ( m + 1 ) % ( 2 * mergeLength )   == 0 ) {
-                    mergedArrary[j] = testArray[k] ;
-                    k++ ;
-                printf ( "case 4 \n" ) ;
-
-            // if the two source pointers are targeting the end of the sequences
-            } else if ( ( ( ( k + 1 ) % mergeLength )         == 0 ) && 
-                            ( m + 1 ) % ( 2 * mergeLength )   == 0 ) {
-            
-                // if one sub string has been merged
-                k += ( mergeLength + 1 ) ;
-                m += ( mergeLength + 1 ) ;
-
-                printf ( "case 2 \n" ) ;
-
-            } else {
-
-                // k is the first source sub-array's pointer
-                // m is the second source sub-array's pointer
-                if ( testArray[k] > testArray[m] ) {
-                    mergedArrary[j] = testArray[m] ;
-                    m++ ;
-                } else {
-                    mergedArrary[j] = testArray[k] ;
-                    k++ ;
-                }
-
-                printf ( "case 5 \n" ) ;
-
-            }
-
-        }
-
-        printf ( " This is after %dth layer Sorting ... \n " , i ) ;
-        copy_array  ( testArray    , mergedArrary , sizeOfTestArray ) ;
-        print_array ( mergedArrary , sizeOfTestArray ) ;
-        
-    }
+    merge_sort ( testArray , testArray + ( int ) floor ( sizeOfTestArray / 2 ) , 
+                     ( int ) floor ( sizeOfTestArray / 2 ) , 
+                     sizeOfTestArray - ( ( int ) floor ( sizeOfTestArray / 2 ) )
+                 ) ;
 
     // after sorting
     printf ( "This is after sorting.\n" ) ;
-    print_array ( mergedArrary , sizeOfTestArray ) ;
+    print_array ( testArray , sizeOfTestArray ) ;
 
     // testing
-    if ( test_array_been_sorted ( mergedArrary , sizeOfTestArray ) )
+    if ( test_array_been_sorted ( testArray , sizeOfTestArray ) )
         system ( " figlet SORTING SUCCESS ! \n " ) ;
     else
         system ( " figlet SORTING FAILED ! \n " ) ;
 
     delete[] testArray ;
-    delete[] mergedArrary ;
     
     return 0 ;
 
