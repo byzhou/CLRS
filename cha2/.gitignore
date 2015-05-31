@@ -2,5 +2,6 @@
 merge_sort
 main
 insert_sort
+heap_sort
 *.log
 *.swp
