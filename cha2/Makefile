@@ -13,6 +13,12 @@ arrayGen.o:
 main.o: main.cpp
 	~/colorg++ -c main.cpp
 
+heap_sort.o: heap_sort.cpp
+	~/colorg++ -c heap_sort.cpp
+
+heap_sort: heap_sort.o arrayGen.o
+	~/colorg++ heap_sort.o arrayGen.o -o heap_sort
+
 main: main.o arrayGen.o
 	~/colorg++ main.o arrayGen.o -o main
 
@@ -28,10 +34,13 @@ run_main: main
 run_merge_sort: merge_sort
 	./merge_sort
 
+run_heap_sort: heap_sort
+	./heap_sort
+
 run_insert_sort: insert_sort
 	time ./insert_sort
 
-run: run_merge_sort
+run: run_heap_sort
 
 clean:
-	rm -rf *.o main merge_sort insert_sort
+	rm -rf *.o main merge_sort insert_sort heap_sort
