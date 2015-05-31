@@ -34,32 +34,34 @@ void max_heapify ( int* testArray , int iIndex , int sizeOfHeap ) {
     // if the largest value is not in the middle, change it to the middle one
     // pass the small value down into the bottom of the heap
     if ( largestIndex != iIndex ) {
-        printf ( " Before Swap \n " ) ;
-        printf ( " lIndex: testArray[%d] = %d " , lIndex , testArray[lIndex] ) ;
-        printf ( " rIndex: testArray[%d] = %d " , rIndex , testArray[rIndex] ) ;
-        printf ( " iIndex: testArray[%d] = %d \n" , iIndex , testArray[iIndex] ) ;
-        printf ( " largestIndex: testArray[%d] = %d \n" , largestIndex , testArray[largestIndex] ) ;
+        // printf ( " The size of the heap is %d \n " , sizeOfHeap ) ;
+        // printf ( " Before Swap \n " ) ;
+        // printf ( " lIndex: testArray[%d] = %d " , lIndex , testArray[lIndex] ) ;
+        // printf ( " rIndex: testArray[%d] = %d " , rIndex , testArray[rIndex] ) ;
+        // printf ( " iIndex: testArray[%d] = %d \n" , iIndex , testArray[iIndex] ) ;
+        // printf ( " largestIndex: testArray[%d] = %d \n" , largestIndex , testArray[largestIndex] ) ;
 
         // switch the largest value with the middle value
         tmp                     = testArray[largestIndex] ;
         testArray[largestIndex] = testArray[iIndex] ;
         testArray[iIndex]       = tmp ;
-        printf ( " After  Swap \n " ) ;
-        printf ( " lIndex: testArray[%d] = %d " , lIndex , testArray[lIndex] ) ;
-        printf ( " rIndex: testArray[%d] = %d " , rIndex , testArray[rIndex] ) ;
-        printf ( " iIndex: testArray[%d] = %d \n" , iIndex , testArray[iIndex] ) ;
-        printf ( " largestIndex: testArray[%d] = %d \n" , largestIndex , testArray[largestIndex] ) ;
-        printf ( " Going to a deeper recursion.\n " ) ;
+        // printf ( " After  Swap \n " ) ;
+        // printf ( " lIndex: testArray[%d] = %d " , lIndex , testArray[lIndex] ) ;
+        // printf ( " rIndex: testArray[%d] = %d " , rIndex , testArray[rIndex] ) ;
+        // printf ( " iIndex: testArray[%d] = %d \n" , iIndex , testArray[iIndex] ) ;
+        // printf ( " largestIndex: testArray[%d] = %d \n" , largestIndex , testArray[largestIndex] ) ;
+        // printf ( " Going to a deeper recursion.\n " ) ;
 
-        printf ( " Going to a deeper recursion.\n " ) ;
         // recursive
         max_heapify ( testArray , largestIndex , sizeOfHeap ) ;
+
     } else {
 
-        printf ( " lIndex: testArray[%d] = %d " , lIndex , testArray[lIndex] ) ;
-        printf ( " rIndex: testArray[%d] = %d " , rIndex , testArray[rIndex] ) ;
-        printf ( " iIndex: testArray[%d] = %d \n" , iIndex , testArray[iIndex] ) ;
-        printf ( " largestIndex: testArray[%d] = %d \n" , largestIndex , testArray[largestIndex] ) ;
+        // printf ( " The size of the heap is %d \n " , sizeOfHeap ) ;
+        // printf ( " lIndex: testArray[%d] = %d " , lIndex , testArray[lIndex] ) ;
+        // printf ( " rIndex: testArray[%d] = %d " , rIndex , testArray[rIndex] ) ;
+        // printf ( " iIndex: testArray[%d] = %d \n" , iIndex , testArray[iIndex] ) ;
+        // printf ( " largestIndex: testArray[%d] = %d \n" , largestIndex , testArray[largestIndex] ) ;
 
     }
         
@@ -70,8 +72,8 @@ void build_heap ( int* testArray , int sizeOfHeap ) {
     int i=0 ;
 
     // build the heap from the second half of the heap
-    for ( i = ( sizeOfHeap / 2 ) ; i >= 0 ; i -- ) {
-        max_heapify ( testArray , i , sizeOfHeap - i ) ;
+    for ( i = ( floor ( sizeOfHeap / 2 ) - 1 ) ; i >= 0 ; i -- ) {
+        max_heapify ( testArray , i , sizeOfHeap ) ;
     }
 
 }
@@ -82,8 +84,8 @@ void heap_sort ( int* testArray , int sizeOfTestArray ) {
     int tmp=0 ;
 
     build_heap ( testArray , sizeOfTestArray ) ;
-    printf ( "After building the heap for the first time.\n" ) ;
-    print_array ( testArray , sizeOfTestArray ) ;
+    // printf ( "After building the heap for the first time.\n" ) ;
+    // print_array ( testArray , sizeOfTestArray ) ;
 
     for ( i = sizeOfTestArray - 1 ; i >=0 ; i-- ) {
         // exchange the last element with the first element, since the first element is the always
@@ -92,10 +94,11 @@ void heap_sort ( int* testArray , int sizeOfTestArray ) {
         testArray[i]    = testArray[0] ;
         testArray[0]    = tmp ;
 
-        printf ( "After heaping each time.\n" ) ;
-        print_array ( testArray , sizeOfTestArray ) ;
+        // printf ( "After heaping each time.\n" ) ;
+        // print_array ( testArray , sizeOfTestArray ) ;
 
-        max_heapify ( testArray , 1 , i )  ;
+        max_heapify ( testArray , 0 , i )  ;
+
     }
 
 }
