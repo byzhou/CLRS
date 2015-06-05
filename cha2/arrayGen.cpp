@@ -24,6 +24,13 @@ void print_array ( int* randomArray , int sizeOfArray ) {
 
 }
 
+void print_array ( int* randomArray , int startIndex , int endIndex ) {
+
+    for ( int i = startIndex ; i <= endIndex ; i ++ ) 
+        printf ( "%d\n" , randomArray[i] ) ;
+
+}
+
 bool test_array_been_sorted ( int* randomArray , int sizeOfArray ) {
 
     for ( int i = 0 ; i < sizeOfArray - 1 ; i ++ ) {

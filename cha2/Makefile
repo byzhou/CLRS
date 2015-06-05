@@ -1,14 +1,20 @@
 
 all:run
 
-merge_sort.o:
+merge_sort.o: merge_sort.cpp
 	~/colorg++ -c merge_sort.cpp 
 
-insert_sort.o:
+insert_sort.o: insert_sort.cpp
 	~/colorg++ -c insert_sort.cpp 
 
-arrayGen.o:
-	~/colorg++ -c arrayGen.cpp
+quick_sort.o: quick_sort.cpp
+	g++ -c quick_sort.cpp
+
+arrayGen.o: arrayGen.cpp
+	g++ -c arrayGen.cpp
+
+quick_sort: quick_sort.o arrayGen.o
+	g++ quick_sort.o arrayGen.o -o quick_sort
 
 main.o: main.cpp
 	~/colorg++ -c main.cpp
@@ -40,7 +46,10 @@ run_heap_sort: heap_sort
 run_insert_sort: insert_sort
 	time ./insert_sort
 
-run: run_heap_sort
+run_quick_sort: quick_sort
+	./quick_sort
+
+run: run_quick_sort
 
 clean:
-	rm -rf *.o main merge_sort insert_sort heap_sort
+	rm -rf *.o main merge_sort insert_sort heap_sort quick_sort
