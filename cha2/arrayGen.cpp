@@ -1,11 +1,32 @@
 #include "arrayGen.h"
 
+int random_number_generator ( int lowerBound , int upperBound ) {
+
+    //time seed 
+    srand ( time ( NULL ) ) ;
+
+    int rangeOfRandom       = upperBound - lowerBound + 1 ; 
+
+    int my_random_number    = rand () % rangeOfRandom + lowerBound ; 
+
+    return my_random_number ;
+
+}
+
 void integer_random_number_generator ( int* randomArray , int sizeOfArray ) {
     // time seed 
     srand ( time ( NULL ) ) ;
 
     for ( int i = 0 ; i < sizeOfArray ; i ++ ) 
         * ( randomArray + i )  = rand() % 100 + 1 ;
+}
+
+void integer_random_number_generator ( int* randomArray , int lowerBound , int upperBound ) {
+    // time seed 
+    srand ( time ( NULL ) ) ;
+
+    for ( int i = 0 ; i < ( upperBound - lowerBound + 1 ) ; i ++ ) 
+        * ( randomArray + i )  = rand() % ( upperBound - lowerBound + 1 ) + lowerBound ;
 }
 
 void double_random_number_generator ( int* randomArray , int sizeOfArray ) {

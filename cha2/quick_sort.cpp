@@ -54,6 +54,15 @@ int partition ( int* testArray , int startIndex , int endIndex ) {
 
 }
 
+// This is for averaging the quicksort performance
+int random_partition ( int* testArray , int startIndex , int endIndex ) {
+
+    int randomIndex = random_number_generator ( startIndex , endIndex ) ;
+    swap ( testArray , randomIndex , endIndex ) ;
+    return partition ( testArray , startIndex , endIndex ) ;
+
+}
+
 void quick_sort ( int* testArray , int startIndex , int endIndex ) {
 
     int midIndex = 0 ;
@@ -61,7 +70,7 @@ void quick_sort ( int* testArray , int startIndex , int endIndex ) {
     if ( startIndex < endIndex ) {
     
         // find out the midpoint and partition the the array into two parts
-        midIndex = partition ( testArray , startIndex , endIndex ) ;
+        midIndex = random_partition ( testArray , startIndex , endIndex ) ;
         // printf ( " startIndex = %d , endIndex = %d , midIndex = %d \n " ,
         //             startIndex , endIndex , midIndex ) ;
 

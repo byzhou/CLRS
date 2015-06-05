@@ -7,6 +7,7 @@
 
 // integer random number generator
 void integer_random_number_generator ( int* randomArray , int sizeOfArray ) ;
+void integer_random_number_generator ( int* randomArray , int lowerBound , int upperBound ) ;
 
 // double random number generator
 void double_random_number_generator ( int* randomArray , int sizeOfArray ) ;
@@ -17,4 +18,5 @@ void print_array ( int* randomArray , int sizeOfArray ) ;
 bool test_array_been_sorted ( int* randomArray , int sizeOfArray ) ;
 void copy_array ( int* targetArray , int* sourceArray , int sizeOfArray ) ;
 void print_array ( int* randomArray , int startIndex , int endIndex ) ;
+int random_number_generator ( int lowerBound , int upperBound ) ;
 #endif
