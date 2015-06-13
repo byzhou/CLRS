@@ -46,7 +46,7 @@ void counting_sort ( int* sourceArray , int sizeOfSourceArray ) {
     // put the source array elements into the right places
     for ( i = 0 ; i < sizeOfSourceArray ; i ++ ) {
         // the source array element goes to the index of number of elements smaller than it
-        targetArray[tmpArray[sourceArray[i]]] = sourceArray[i] ; 
+        targetArray[tmpArray[sourceArray[i]] - 1] = sourceArray[i] ; 
         // after place one, reduce the number of elements
         tmpArray[sourceArray[i]] -- ;
     }

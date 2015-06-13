@@ -5,5 +5,6 @@ insert_sort
 heap_sort
 quick_sort
 counting_sort
+radix_sort
 *.log
 *.swp

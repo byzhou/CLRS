@@ -53,9 +53,134 @@ void counting_sort ( int* sourceArray , int sizeOfSourceArray ) {
 
     copy_array ( sourceArray , targetArray , sizeOfSourceArray ) ;
 
-
     delete[] targetArray ;
     delete[] tmpArray ;
+
+}
+
+// find out the radix number of a value
+int radixNumber ( int findRadixNumberOfThisInt ) {
+
+    int returnValue=0 ;
+
+    // end condition
+    if ( findRadixNumberOfThisInt / 10 == 0 ) {
+        return (int) 1 ;
+    } else {
+        // recursive tests
+        returnValue = radixNumber ( findRadixNumberOfThisInt / 10 ) ;
+        returnValue++ ;
+        return returnValue ;
+    }
+
+}
+
+int power ( int base , int powerNum ) {
+
+    if ( powerNum == 0 )
+        return 1 ;
+    else
+        return base * power ( base , powerNum - 1 ) ;
+
+}
+
+// Generating the radix sort reference
+void radixRefGen ( int* sourceArray , int sizeOfSourceArray , 
+                    int* counting_sort_ref , int radixNowSorting ) {
+
+    int i=0 ;
+
+    for ( i = 0 ; i < sizeOfSourceArray ; i ++ ) 
+        counting_sort_ref[i]    = sourceArray[i] % power ( 10 , radixNowSorting + 1 ) 
+                                                 / power ( 10 , radixNowSorting ) ;
+}
+
+// the core sorting algorithm is counting_sort
+void radix_sort ( int* sourceArray , int sizeOfSourceArray ) {
+
+    // counter
+    int     i=0 , j=0 ;
+
+    int*    counting_sort_ref ;
+    int*    targetArray ;
+    int*    tmpArray ;
+
+    // creating the dynamic arrays
+    counting_sort_ref       = new int [sizeOfSourceArray] ;
+    tmpArray                = new int [10] ;
+    targetArray             = new int [sizeOfSourceArray] ;
+
+
+
+    // get the largest radix number of the array, but first, I need to get the largest value
+    int     largestValueOfSourceArray       = max ( sourceArray , sizeOfSourceArray ) ;
+    int     largestRadixNumberOfSourceArray = radixNumber ( largestValueOfSourceArray ) ;
+
+    for ( i = 0 ; i < largestRadixNumberOfSourceArray ; i ++ ) {
+        // sorting on each radix
+
+        // find out the radix value of each number as the sorting refs
+        radixRefGen ( sourceArray , sizeOfSourceArray , counting_sort_ref , i ) ;
+
+        // #define radix_extraction_test 
+        // #define single_radix_sort_test
+        // #define tmpArray_test
+
+        #ifdef radix_extraction_test
+          printf ( "%dth radix, ref values \n " , i ) ;
+          print_array ( counting_sort_ref , sizeOfSourceArray ) ;
+          printf ( "\n\n\n" ) ;
+        #endif
+        
+        for ( j=0 ; j<10 ; j++ ) 
+            tmpArray[j] = 0 ;
+    
+        for ( j=0 ; j<sizeOfSourceArray ; j++ ) 
+            tmpArray[counting_sort_ref[j]] ++ ;
+
+        #ifdef tmpArray_test
+            printf ( "before accumulation %dth tmpArray test \n " , i) ;
+            print_array ( tmpArray , 10 ) ;
+            printf ( "\n\n\n\n\n" ) ;
+        #endif 
+
+        for ( j=1 ; j<10 ; j++ ) 
+            tmpArray[j] += tmpArray[j - 1] ;
+
+        #ifdef tmpArray_test
+            printf ( "after accumulation %dth tmpArray test \n " , i) ;
+            print_array ( tmpArray , 10 ) ;
+            printf ( "\n\n\n\n\n" ) ;
+        #endif 
+
+        #ifdef single_radix_sort_test
+            printf ( "before final sort, test source array, %dth radix \n " , i ) ;
+            print_array ( sourceArray , sizeOfSourceArray ) ;
+            printf ( "\n\n\n" ) ;
+            printf ( "before final sort, test target array, %dth radix \n " , i ) ;
+            print_array ( targetArray , sizeOfSourceArray ) ;
+            printf ( "\n\n\n" ) ;
+        #endif
+
+        for ( j=(sizeOfSourceArray - 1) ; j>= 0 ; j-- ){
+            targetArray[tmpArray[counting_sort_ref[j]] - 1] = sourceArray[j] ;
+            tmpArray[counting_sort_ref[j]] -- ;
+        }
+
+        copy_array ( sourceArray , targetArray , sizeOfSourceArray ) ;
+
+        #ifdef single_radix_sort_test
+            printf ( "%dth radix, sorted values \n " , i ) ;
+            print_array ( targetArray , sizeOfSourceArray ) ;
+            printf ( "\n\n\n" ) ;
+        #endif
+
+    }
+
+
+    delete[] targetArray ;
+    delete[] tmpArray ;    
+    delete[] counting_sort_ref ;
 
 }
 
@@ -82,7 +207,7 @@ int main () {
     printf ( " Start Sorting ... \n " ) ;
 
     // This part is the sorting
-    counting_sort ( testArray , sizeOfTestArray ) ;
+    radix_sort ( testArray , sizeOfTestArray ) ;
 
     // after sorting
     printf ( "This is after sorting.\n" ) ;
