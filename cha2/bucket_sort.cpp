@@ -139,13 +139,13 @@ void bucket_sort ( int* sourceArray , int sizeOfSourceArray ) {
        
        for ( currNode = targetList[currRadixNum] ; (currNode->nextNode != NULL); 
                 currNode = currNode->nextNode ) 
-            if ( currNode->value < sourceArray[i] )
+            if ( sourceArray[i] < currNode->nextNode->value )
                 break ;
 
        #define currNode_debug
        #ifdef currNode_debug
            printf ( "List Num %d, value for insertion %d \t " , currRadixNum , sourceArray[i] ) ;
-           printf ( "currNode value %d \n " , currNode->value ) ;
+           printf ( "currNode->nextNode value %d \n " , currNode->value ) ;
        #endif
      
        #ifdef segment_debug
@@ -160,28 +160,29 @@ void bucket_sort ( int* sourceArray , int sizeOfSourceArray ) {
        insert_node ( currNode , newNode ) ;
 
     }
-
-    #define pre_cat_debug
+    
+    // This may leads to segment fault, do not debug with this
+    // #define pre_cat_debug
     #ifdef pre_cat_debug
-
     for ( i = 0 ; i < (sizeOfSourceArray - 1) ; i ++ ) {
         for ( currNode = targetList[i]->nextNode ; currNode->nextNode != NULL ; 
                 currNode = currNode->nextNode )     
             printf ( " %dth linked lists leads %d \n " , i, currNode->value ) ;
     }
     #endif
+    // may leads to segment fault
 
     for ( i = 0 ; i < (sizeOfSourceArray - 1) ; i ++ ) {
         #define cancatenation_debug
         #ifdef cancatenation_debug
             printf ( " %dth linked lists leads %d \n " , i, targetList[i]->nextNode->value ) ;
         #endif
-        link_linked_lists ( targetList[i] , targetList[i + 1]) ;
+        link_linked_lists ( targetList[i]->nextNode , targetList[i + 1] ) ;
     }
 
-   for ( i = 0 , currNode = targetList[0] ; currNode->nextNode != NULL ; 
-       currNode = currNode->nextNode , i++ )
-       sourceArray[i] = currNode->value ;
+    for ( i = 0 , currNode = targetList[0] ; currNode->nextNode != NULL ; 
+        currNode = currNode->nextNode , i++ )
+        sourceArray[i] = currNode->value ;
 
 
     // concatenation has not been done
