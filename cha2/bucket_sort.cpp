@@ -8,13 +8,20 @@ class node {
         node*   nextNode ;
         int     value ;
 
+    node() ;
     node(int value);
 
 };
 
+// constructor
+node::node() {
+    nextNode    = NULL ;
+    value       = -32767 ;
+}
+
 node::node(int value){
-    nextNode   = NULL ;
-    value      = value ;
+    nextNode    = NULL ;
+    value       = value ;
 }
 
 void create_linked_list ( node* leadNode ) {
@@ -32,6 +39,17 @@ void insert_node ( node* preNode , node* currNode ) {
 void link_linked_lists ( node* preListLead , node* postListLead ) {
 
     node* currNode ; 
+
+    if ( preListLead == NULL ) {
+        preListLead = postListLead ;
+        return ;
+    }
+
+    if ( postListLead == NULL ) {
+        postListLead = preListLead ;
+        return ;
+    }
+            
     for ( currNode = preListLead ; currNode->nextNode != NULL ; currNode = currNode->nextNode ) ;
     currNode->nextNode      = postListLead ;
 
@@ -70,38 +88,104 @@ int radixNumber ( int findRadixNumberOfThisInt ) {
 
 }
 
+int power ( int base , int powerNum ) {
+
+    if ( powerNum == 0 )
+        return 1 ;
+    else
+        return base * power ( base , powerNum - 1 ) ;
+
+}
+
 void bucket_sort ( int* sourceArray , int sizeOfSourceArray ) {
 
     // counters
-    int     i=0 ;
-    int     bucketNum=10 ;
+    int     i           =0 ;
+    // bucket number
+    int     bucketNum   =10 ;
 
     node*   targetList[bucketNum] ;
     int*    targetArray ;
     node*   currNode ;
 
-
     targetArray                             = new int [sizeOfSourceArray] ;
+    for ( i = 0 ; i < sizeOfSourceArray ; i ++ ) {
+        targetList[i]       = new node ;
+        create_linked_list ( targetList[i] ) ;
+    }
 
+    // decide the size of everything
     int     largestValueOfSourceArray       = max ( sourceArray , sizeOfSourceArray ) ;
     int     largestRadixNumberOfSourceArray = radixNumber ( largestValueOfSourceArray ) ;
     int     currRadixNum                    = 0 ;
 
+    #define segment_debug
+    #ifdef segment_debug
+        printf("before everything\n") ;
+    #endif
+
     for ( i = 0 ; i < sizeOfSourceArray ; i ++ ) {
        
-       currRadixNum = sourceArray[i] / power ( 10 , largestRadixNumberOfSourceArray ) ;
+       currRadixNum = sourceArray[i] / power ( 10 , largestRadixNumberOfSourceArray - 1) ;
+        // #define radix_debug
+        #ifdef radix_debug
+            printf ( "currRadixNum %d \t " , currRadixNum ) ;
+            printf ( "denominator %d \n " , power ( 10 , largestRadixNumberOfSourceArray - 1) ) ;
+        #endif
 
-       for ( currNode = targetList[currRadixNum] ; currNode->nextNode->value < sourceArray[i]; 
-               currNode = currNode->nextNode )
-           if ( currNode->nextNode == NULL )
-               break ;
-      
-       node* newNode = new node ; 
-       newNode->value = sourceArray[i] ;
+        #ifdef segment_debug
+            printf("before find the insertion point\n") ;
+        #endif
+       
+       for ( currNode = targetList[currRadixNum] ; (currNode->nextNode != NULL); 
+                currNode = currNode->nextNode ) 
+            if ( currNode->value < sourceArray[i] )
+                break ;
 
+       #define currNode_debug
+       #ifdef currNode_debug
+           printf ( "List Num %d, value for insertion %d \t " , currRadixNum , sourceArray[i] ) ;
+           printf ( "currNode value %d \n " , currNode->value ) ;
+       #endif
+     
+       #ifdef segment_debug
+            printf("before insertion\n");
+       #endif
+       
+       // create a new node for insertion 
+       node* newNode    = new node ; 
+       newNode->value   = sourceArray[i] ;
+        
+       // insert the node
        insert_node ( currNode , newNode ) ;
+
     }
 
+    #define pre_cat_debug
+    #ifdef pre_cat_debug
+
+    for ( i = 0 ; i < (sizeOfSourceArray - 1) ; i ++ ) {
+        for ( currNode = targetList[i]->nextNode ; currNode->nextNode != NULL ; 
+                currNode = currNode->nextNode )     
+            printf ( " %dth linked lists leads %d \n " , i, currNode->value ) ;
+    }
+    #endif
+
+    for ( i = 0 ; i < (sizeOfSourceArray - 1) ; i ++ ) {
+        #define cancatenation_debug
+        #ifdef cancatenation_debug
+            printf ( " %dth linked lists leads %d \n " , i, targetList[i]->nextNode->value ) ;
+        #endif
+        link_linked_lists ( targetList[i] , targetList[i + 1]) ;
+    }
+
+   for ( i = 0 , currNode = targetList[0] ; currNode->nextNode != NULL ; 
+       currNode = currNode->nextNode , i++ )
+       sourceArray[i] = currNode->value ;
+
+
+    // concatenation has not been done
+    delete[] targetArray ;
 
 
 }
