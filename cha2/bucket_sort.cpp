@@ -39,19 +39,20 @@ void insert_node ( node* preNode , node* currNode ) {
 void link_linked_lists ( node* preListLead , node* postListLead ) {
 
     node* currNode ; 
-
+    
+    if ( ( preListLead == NULL ) && ( postListLead == NULL ) ) {
+        postListLead = preListLead ;
+        return ;
+    }
+            
     if ( preListLead == NULL ) {
         preListLead = postListLead ;
         return ;
     }
 
-    if ( postListLead == NULL ) {
-        postListLead = preListLead ;
-        return ;
-    }
-            
     for ( currNode = preListLead ; currNode->nextNode != NULL ; currNode = currNode->nextNode ) ;
-    currNode->nextNode      = postListLead ;
+
+    currNode->nextNode  = postListLead ;
 
 }
 
@@ -101,6 +102,7 @@ void bucket_sort ( int* sourceArray , int sizeOfSourceArray ) {
 
     // counters
     int     i           =0 ;
+    int     j           =0 ;
     // bucket number
     int     bucketNum   =10 ;
 
@@ -172,22 +174,25 @@ void bucket_sort ( int* sourceArray , int sizeOfSourceArray ) {
     #endif
     // may leads to segment fault
 
-    for ( i = 0 ; i < (sizeOfSourceArray - 1) ; i ++ ) {
-        #define cancatenation_debug
-        #ifdef cancatenation_debug
-            printf ( " %dth linked lists leads %d \n " , i, targetList[i]->nextNode->value ) ;
-        #endif
-        link_linked_lists ( targetList[i]->nextNode , targetList[i + 1] ) ;
+    for ( i = 0 ; i < sizeOfSourceArray ; i ++ ) {
+        if ( targetList[i]->nextNode == NULL ) 
+            continue ;
+        else 
+            for ( currNode = targetList[i]->nextNode ; currNode->nextNode != NULL ;
+                    currNode = currNode->nextNode ) {
+                targetArray[j] = currNode->value ;
+                j++ ;
+
+                #define cat_debug
+                #ifdef cat_debug
+                    printf ( "sorted values %d \n " , targetArray[j] );
+                #endif 
+
+            }
     }
-
-    for ( i = 0 , currNode = targetList[0] ; currNode->nextNode != NULL ; 
-        currNode = currNode->nextNode , i++ )
-        sourceArray[i] = currNode->value ;
-
 
     // concatenation has not been done
     delete[] targetArray ;
-
 
 }
 
