@@ -7,5 +7,6 @@ quick_sort
 counting_sort
 radix_sort
 bucket_sort
+linked_list
 *.log
 *.swp
