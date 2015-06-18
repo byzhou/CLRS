@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "arrayGen.h"
+#include "linked_list.h"
 
 int main () {
     int* test ;

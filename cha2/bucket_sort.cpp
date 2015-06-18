@@ -156,6 +156,10 @@ void bucket_sort ( int* sourceArray , int sizeOfSourceArray ) {
        
        // create a new node for insertion 
        node* newNode    = new node ; 
+        // #define newNode_debug
+        #ifdef newNode_debug
+               printf ( " new Node value %d \n " , newNode->value ) ;
+        #endif
        newNode->value   = sourceArray[i] ;
         
        // insert the node
@@ -163,16 +167,14 @@ void bucket_sort ( int* sourceArray , int sizeOfSourceArray ) {
 
     }
     
-    // This may leads to segment fault, do not debug with this
-    // #define pre_cat_debug
+    #define pre_cat_debug
     #ifdef pre_cat_debug
     for ( i = 0 ; i < (sizeOfSourceArray - 1) ; i ++ ) {
-        for ( currNode = targetList[i]->nextNode ; currNode->nextNode != NULL ; 
+        for ( currNode = targetList[i] ; currNode->nextNode != NULL ; 
                 currNode = currNode->nextNode )     
             printf ( " %dth linked lists leads %d \n " , i, currNode->value ) ;
     }
     #endif
-    // may leads to segment fault
 
     for ( i = 0 ; i < sizeOfSourceArray ; i ++ ) {
         if ( targetList[i]->nextNode == NULL ) 
@@ -180,11 +182,13 @@ void bucket_sort ( int* sourceArray , int sizeOfSourceArray ) {
         else 
             for ( currNode = targetList[i]->nextNode ; currNode->nextNode != NULL ;
                     currNode = currNode->nextNode ) {
+
                 targetArray[j] = currNode->value ;
                 j++ ;
 
                 #define cat_debug
                 #ifdef cat_debug
+                    printf ( "i value %d \n "       , i ) ;
                     printf ( "sorted values %d \n " , targetArray[j] );
                 #endif 
 

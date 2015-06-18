@@ -37,6 +37,12 @@ radix_sort: radix_sort.o arrayGen.o
 bucket_sort: bucket_sort.o arrayGen.o
 	g++ bucket_sort.o arrayGen.o -o bucket_sort
 
+linked_list.o : linked_list.cpp
+	g++ -c linked_list.cpp
+
+linked_list: linked_list.o main.o
+	g++ linked_list.o main.o -o linked_list
+	
 main.o: main.cpp
 	~/colorg++ -c main.cpp
 
@@ -76,7 +82,11 @@ run_radix_sort: radix_sort
 run_bucket_sort: bucket_sort
 	./bucket_sort
 
-run: run_bucket_sort
+run_linked_list : linked_list
+	./linked_list
+
+run: run_linked_list
+	echo -e "\n\n\n\n\n"
 
 clean:
 	rm -rf *.o main merge_sort insert_sort heap_sort quick_sort
