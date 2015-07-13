@@ -5,9 +5,10 @@
 #include "linked_list.h"
 
 int main () {
-    int* test ;
-    test = new int (4 * sizeof ( int ) )  ;
-
-    integer_random_number_generator ( test, 4 )  ;
     printf ( " hello world \n" ) ;
+
+    node newNode(10) ;
+    linked_list mylist ;
+    //mylist.addNode(newNode) ;
+
 }

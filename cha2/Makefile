@@ -38,19 +38,19 @@ bucket_sort: bucket_sort.o arrayGen.o
 	g++ bucket_sort.o arrayGen.o -o bucket_sort
 
 linked_list.o : linked_list.cpp
-	g++ -c linked_list.cpp
+	~/colorg++ -c linked_list.cpp
 
 linked_list: linked_list.o main.o
-	g++ linked_list.o main.o -o linked_list
+	~/colorg++ linked_list.o main.o -o linked_list
 	
 main.o: main.cpp
-	~/colorg++ -c main.cpp
+	g++ -c main.cpp
 
 heap_sort: heap_sort.o arrayGen.o
 	~/colorg++ heap_sort.o arrayGen.o -o heap_sort
 
 main: main.o arrayGen.o
-	~/colorg++ main.o arrayGen.o -o main
+	g++ main.o arrayGen.o -o main
 
 merge_sort: merge_sort.o arrayGen.o
 	~/colorg++ merge_sort.o arrayGen.o -o merge_sort

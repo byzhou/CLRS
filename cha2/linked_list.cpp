@@ -1,18 +1,14 @@
 // This is a library of linked list
-
-class node {
-    public:
-        int     value ;
-        node*   nextNode ;
-
-    node () ;
-    node ( int newValue ) ;
-    node ( node* ) ;
-
-};
+#ifndef librarys
+#define librarys
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#endif
+#include "linked_list.h"
 
 node::node () {
-    value       = -32767 ;
+    value       = 0 ;
     nextNode    = NULL ;
 }
 
@@ -28,17 +24,11 @@ node::node ( node* newNode ) {
 
 }
 
-class linked_list {
-    public:
-        node*   lead ;
-
-    linked_list () ;
-    ~linked_list () ;
-    void addNode ( node addedNode ) ;
-
-};
-
 linked_list::linked_list () {
+
+    lead        = new node ;
+    printf ( "linked_list created\n" ) ;
+        
 }
 
 linked_list::~linked_list () {
@@ -46,19 +36,22 @@ linked_list::~linked_list () {
     node*   currNode ; 
     node*   tmpNode ;
 
-    for ( currNode = lead ; currNode->nextNode != NULL ; 
-            currNode = currNode->nextNode ) {
+    for ( currNode = lead ; currNode->nextNode != NULL ; ) {
 
         tmpNode             = currNode ;
         currNode->nextNode  = currNode->nextNode->nextNode ;
         delete tmpNode ;
 
     }
+
+    printf ( "destructor worked \n " ) ;
+    delete lead ;
         
 }
 
 void linked_list::addNode ( node addedNode ) {
 
+    printf ( "adding node\n" ) ;
     node* newNode  = new node ( addedNode ) ;
 
     node* currNode ; 
@@ -69,6 +62,5 @@ void linked_list::addNode ( node addedNode ) {
     currNode->nextNode = newNode ;
 
 }
-
 
 

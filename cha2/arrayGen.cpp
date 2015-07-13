@@ -67,3 +67,37 @@ void copy_array ( int* targetArray , int* sourceArray , int sizeOfArray ) {
         targetArray[i] = sourceArray[i] ;
 
 }
+
+bool test_array_min ( int* randomArray , int sizeOfArray, int minumum ) {
+
+    int tmpMin  = 32767 ;
+    int i       = 0 ;
+    
+    for ( i = 0 ; i < sizeOfArray ; i ++ ) {
+        if ( randomArray[i] < tmpMin ) 
+            tmpMin = randomArray[i];
+    }
+
+    if ( tmpMin == minumum ) 
+        return true ;
+    else
+        return false ;
+
+}
+
+bool test_array_max ( int* randomArray , int sizeOfArray , int maximum ) {
+
+    int tmpMax  = -32767 ;
+    int i       = 0 ;
+    
+    for ( i = 0 ; i < sizeOfArray ; i ++ ) {
+        if ( randomArray[i] > tmpMax ) 
+            tmpMax = randomArray[i];
+    }
+
+    if ( tmpMax == maximum )  
+        return true ;
+    else
+        return false ;
+
+}
