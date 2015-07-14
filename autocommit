@@ -1,7 +1,0 @@
-cd ../CLRS
-git add .
-git commit -a -m "AUTOCOMMIT ON CHANGE `date`"
-git push origin master
-cd -
-
-
