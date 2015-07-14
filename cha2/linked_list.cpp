@@ -7,6 +7,7 @@
 #endif
 #include "linked_list.h"
 
+#define _DEBUG_
 node::node () {
     value       = 0 ;
     nextNode    = NULL ;
@@ -36,31 +37,43 @@ linked_list::~linked_list () {
     node*   currNode ; 
     node*   tmpNode ;
 
-    for ( currNode = lead ; currNode->nextNode != NULL ; ) {
+    for ( currNode = lead ; currNode->nextNode != NULL ; currNode = currNode->nextNode ) {
 
         tmpNode             = currNode ;
-        currNode->nextNode  = currNode->nextNode->nextNode ;
         delete tmpNode ;
 
     }
 
     printf ( "destructor worked \n " ) ;
-    delete lead ;
         
 }
 
-void linked_list::addNode ( node addedNode ) {
+void linked_list::addNode ( node* addedNode ) {
 
     printf ( "adding node\n" ) ;
-    node* newNode  = new node ( addedNode ) ;
+    node* newNode  = new node ( addedNode->value ) ;
 
     node* currNode ; 
 
-    for ( currNode = lead ; currNode->nextNode != NULL ; 
-            currNode = currNode->nextNode ) ;
-
+    for ( currNode = lead ; currNode->nextNode != NULL ; currNode = currNode->nextNode ) ;
+    
     currNode->nextNode = newNode ;
 
 }
 
+void linked_list::printLinkedList () {
 
+    #ifdef _DEBUG_
+        printf ( "start printing the linked list.\n" );
+    #endif
+    
+    node* currNode ; 
+    for ( currNode = lead ; currNode->nextNode != NULL ; currNode = currNode->nextNode ) {
+        printf ( " %d \n" , currNode->value ) ;
+    }
+
+    #ifdef _DEBUG_
+        printf ( "Printing linked list finished.\n" );
+    #endif
+    
+}

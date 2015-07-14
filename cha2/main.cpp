@@ -9,6 +9,9 @@ int main () {
 
     node newNode(10) ;
     linked_list mylist ;
+
+    mylist.addNode(&newNode) ;
+    mylist.printLinkedList () ;
     //mylist.addNode(newNode) ;
 
 }

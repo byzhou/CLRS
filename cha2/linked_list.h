@@ -18,7 +18,8 @@ class linked_list {
 
     linked_list () ;
     ~linked_list () ;
-    void addNode ( node addedNode ) ;
+    void printLinkedList () ;
+    void addNode ( node* addedNode ) ;
 
 };
     
