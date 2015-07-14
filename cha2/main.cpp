@@ -10,6 +10,8 @@ int main () {
 
     mylist.addNode(&newNode) ;
     mylist.printLinkedList () ;
+    mylist.deleteNextNode(mylist.lead) ;
+    mylist.printLinkedList () ;
     //mylist.addNode(newNode) ;
 
 }

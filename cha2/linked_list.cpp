@@ -54,7 +54,26 @@ void linked_list::printLinkedList () {
     for ( currNode = lead ; currNode->nextNode != NULL ; currNode = currNode->nextNode ) {
         printf ( " %d \n" , currNode->value ) ;
     }
+        printf ( " %d \n" , currNode->value ) ;
     #ifdef _DEBUG_
         printf ( "Printing linked list finished.\n" );
     #endif
+}
+
+void linked_list::deleteNextNode ( node* thisNode ) {
+    
+    node* tmpNode ;
+
+    if ( thisNode->nextNode == NULL ) 
+        printf ( "next node is NULL \n" ) ;
+    else {
+        tmpNode             = thisNode->nextNode ;
+        thisNode->nextNode  = thisNode->nextNode->nextNode ;
+        delete tmpNode ;
+    }
+
+    #ifdef _DEBUG_
+        printf ( "node is deleted. \n" ) ;
+    #endif
+
 }

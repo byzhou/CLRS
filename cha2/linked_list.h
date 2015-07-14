@@ -20,6 +20,7 @@ class linked_list {
     ~linked_list () ;
     void printLinkedList () ;
     void addNode ( node* addedNode ) ;
+    void deleteNextNode ( node* thisNode ) ;
 
 };
     
