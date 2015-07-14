@@ -10,3 +10,4 @@ bucket_sort
 linked_list
 *.log
 *.swp
+.nfs*
