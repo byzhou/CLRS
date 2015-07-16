@@ -35,11 +35,15 @@ linked_list::~linked_list () {
         tmpNode             = currNode ;
         delete tmpNode ;
     }
-    printf ( "destructor worked \n " ) ;
+    #ifdef _DEBUG_
+        printf ( "destructor worked \n " ) ;
+    #endif
 }
 
 void linked_list::addNode ( node* addedNode ) {
-    printf ( "adding node\n" ) ;
+    #ifdef _DEBUG_
+        printf ( "adding node\n" ) ;
+    #endif
     node* newNode  = new node ( addedNode->value ) ;
     node* currNode ; 
     for ( currNode = lead ; currNode->nextNode != NULL ; currNode = currNode->nextNode ) ;
