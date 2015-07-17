@@ -21,6 +21,8 @@ class linked_list {
     void printLinkedList () ;
     void addNode ( node* addedNode ) ;
     void deleteNextNode ( node* thisNode ) ;
+    node* searchNode ( int value ) ;
+    void reverseList () ;
 
 };
     
