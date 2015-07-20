@@ -92,5 +92,34 @@ node* linked_list::searchNode ( int value ) {
 }
 
 void linked_list::reverseList () {
+    node* nextNextCurrNode, nextCurrNode , currNode ;
+
+    currNode            = lead ;
+    nextCurrNode        = lead->nextNode ;
+
+    // if nextCurrNode does not exist
+    if ( nextCurrNode == NULL ) 
+        return 0 ;
+    else if ( nextCurrNode->nextNode == NULL )
+        // if nextNextCurrNode does not exist
+        nextCurrNode->nextNode  = lead ;
+        lead->nextNode          = NULL ;
+        return 0 ;
+    } else {
+        // if three nodes do exist
+        nextNextCurrNode    = nextCurrNode->nextNode ;
+    }
+
+    for (;currNode->nextNode != NULL ;){
+        nextCurrNode->nextNode  = currNode ;
+        nextNextCurrNode        = nextNextCurrNode->nextNode ;
+        if ( nextNextCurrNode == NULL ) {
+            nextNextCurrNode->nextNode = nextCurrNode ;
+            return 0 ;
+        } else {
+            nextNextCurrNode        = nextCurrNode ;
+            nextCurrNode            = currNode ;
+        }
+    }
 
 }
