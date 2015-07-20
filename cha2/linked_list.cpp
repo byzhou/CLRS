@@ -81,3 +81,16 @@ void linked_list::deleteNextNode ( node* thisNode ) {
     #endif
 
 }
+
+node* linked_list::searchNode ( int value ) {
+    node* currNode ;
+    for ( currNode = lead ; currNode->nextNode != NULL ; currNode = currNode->nextNode ) {
+        if ( currNode->value == value ) 
+            return currNode ;
+    }
+    return NULL ;
+}
+
+void linked_list::reverseList () {
+
+}
