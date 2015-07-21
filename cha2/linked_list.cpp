@@ -44,7 +44,14 @@ void linked_list::addNode ( node* addedNode ) {
     #ifdef _DEBUG_
         printf ( "adding node\n" ) ;
     #endif
-    node* newNode  = new node ( addedNode->value ) ;
+    node* newNode   = new node ( addedNode->value ) ;
+    node* currNode ; 
+    for ( currNode = lead ; currNode->nextNode != NULL ; currNode = currNode->nextNode ) ;
+    currNode->nextNode = newNode ;
+}
+
+void linked_list::addNode ( int nodeValue ) {
+    node* newNode   = new node ( nodeValue ) ;
     node* currNode ; 
     for ( currNode = lead ; currNode->nextNode != NULL ; currNode = currNode->nextNode ) ;
     currNode->nextNode = newNode ;
@@ -107,19 +114,23 @@ void linked_list::reverseList () {
         return 0 ;
     } else {
         // if three nodes do exist
-        nextNextCurrNode    = nextCurrNode->nextNode ;
+        nextNextCurrNode        = nextCurrNode->nextNode ;
     }
 
-    for (;currNode->nextNode != NULL ;){
+    // till this point, three dynamic pointer must not be NULL
+    for ( ; nextNextCurrNode != NULL ;){
+        // reverse
         nextCurrNode->nextNode  = currNode ;
-        nextNextCurrNode        = nextNextCurrNode->nextNode ;
-        if ( nextNextCurrNode == NULL ) {
+        if ( nextNextCurrNode->nextNode == NULL ) {
+            // if there is no next step, finish reversing this cycle
             nextNextCurrNode->nextNode = nextCurrNode ;
             return 0 ;
         } else {
-            nextNextCurrNode        = nextCurrNode ;
-            nextCurrNode            = currNode ;
+            currNode            = nextCurrNode ;
+            nextCurrNode        = nextNextCurrNode ;
+            nextNextCurrNode    = nextNextCurrNode -> nextNode ;
         }
     }
+
 
 }

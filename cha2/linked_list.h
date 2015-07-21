@@ -20,6 +20,7 @@ class linked_list {
     ~linked_list () ;
     void printLinkedList () ;
     void addNode ( node* addedNode ) ;
+    void addNode ( int nodeValue ) ;
     void deleteNextNode ( node* thisNode ) ;
     node* searchNode ( int value ) ;
     void reverseList () ;
