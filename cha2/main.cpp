@@ -5,12 +5,17 @@
 #include "linked_list.h"
 
 int main () {
-    node newNode(10) ;
     linked_list mylist ;
 
-    mylist.addNode(&newNode) ;
+    mylist.addNode(10) ;
+    mylist.addNode(20) ;
+    mylist.addNode(30) ;
+    mylist.addNode(30) ;
+    mylist.addNode(40) ;
+    mylist.addNode(50) ;
+    mylist.addNode(60) ;
     mylist.printLinkedList () ;
-    mylist.deleteNextNode(mylist.lead) ;
+    mylist.reverseList () ;
     mylist.printLinkedList () ;
     //mylist.addNode(newNode) ;
 

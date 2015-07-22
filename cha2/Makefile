@@ -44,7 +44,7 @@ linked_list: linked_list.o main.o
 	~/colorg++ linked_list.o main.o -o linked_list
 	
 main.o: main.cpp
-	g++ -c main.cpp
+	~/colorg++ -c main.cpp
 
 heap_sort: heap_sort.o arrayGen.o
 	~/colorg++ heap_sort.o arrayGen.o -o heap_sort

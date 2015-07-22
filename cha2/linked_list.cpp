@@ -33,6 +33,9 @@ linked_list::~linked_list () {
     node*   tmpNode ;
     for ( currNode = lead ; currNode->nextNode != NULL ; currNode = currNode->nextNode ) {
         tmpNode             = currNode ;
+        #ifdef _DEBUG_
+            printf ( "currNode value %d \n ", currNode->value ) ;
+        #endif
         delete tmpNode ;
     }
     #ifdef _DEBUG_
@@ -99,38 +102,55 @@ node* linked_list::searchNode ( int value ) {
 }
 
 void linked_list::reverseList () {
-    node* nextNextCurrNode, nextCurrNode , currNode ;
+    node*               nextNextCurrNode; 
+    node*               nextCurrNode;
+    node*               currNode;
 
     currNode            = lead ;
     nextCurrNode        = lead->nextNode ;
 
     // if nextCurrNode does not exist
-    if ( nextCurrNode == NULL ) 
-        return 0 ;
-    else if ( nextCurrNode->nextNode == NULL )
+    if ( nextCurrNode == NULL ) {
+        return ;
+    } else if ( nextCurrNode->nextNode == NULL ) {
         // if nextNextCurrNode does not exist
-        nextCurrNode->nextNode  = lead ;
-        lead->nextNode          = NULL ;
-        return 0 ;
+        nextCurrNode            = lead ;
+        nextCurrNode->nextNode  = currNode ;
+        return ;
     } else {
         // if three nodes do exist
         nextNextCurrNode        = nextCurrNode->nextNode ;
     }
-
+    #ifdef _DEBUG_ 
+        printf ( "reverse did not end here\n" ) ;
+    #endif
+    // At the first time, the reverse operation should unlink pointer from the first node to the
+    // middle node
     // till this point, three dynamic pointer must not be NULL
-    for ( ; nextNextCurrNode != NULL ;){
+    currNode->nextNode                  = NULL ;
+    for ( ; nextNextCurrNode != NULL ; ){
+        #ifdef _DEBUG_ 
+            printf ( "reverse in every cycle\n" ) ;
+        #endif
         // reverse
-        nextCurrNode->nextNode  = currNode ;
+        nextCurrNode->nextNode          = currNode ;
         if ( nextNextCurrNode->nextNode == NULL ) {
             // if there is no next step, finish reversing this cycle
-            nextNextCurrNode->nextNode = nextCurrNode ;
-            return 0 ;
+            lead                        = nextNextCurrNode  ;
+            lead->nextNode              = nextCurrNode ;
+            #ifdef _DEBUG_ 
+                printf ( "reverse return here\n" ) ;
+            #endif
+            return ;
         } else {
-            currNode            = nextCurrNode ;
-            nextCurrNode        = nextNextCurrNode ;
-            nextNextCurrNode    = nextNextCurrNode -> nextNode ;
+            currNode                    = nextCurrNode ;
+            nextCurrNode                = nextNextCurrNode ;
+            nextNextCurrNode            = nextNextCurrNode -> nextNode ;
         }
     }
-
+    #ifdef _DEBUG_ 
+        printf ( "reverse end here\n" ) ;
+    #endif
+    
 
 }
