@@ -1,7 +1,7 @@
 #include "arrayGen.h"
 // in order to calculate the depth, I need math
 #include <math.h>
-
+//
 // let's write a linked-list
 class node {
     public:
