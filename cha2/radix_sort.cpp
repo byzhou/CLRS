@@ -1,7 +1,6 @@
 #include "arrayGen.h"
 // in order to calculate the depth, I need math
 #include <math.h>
-
 int max ( int* sourceArray , int sizeOfSourceArray ) {
 
     // assume the largest value should be larger than this
