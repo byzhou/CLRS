@@ -1,12 +1,20 @@
 #include "Stack.h"
+// This is for memcpy
+#include <string.h> 
 #include <new>
+#include <stdio.h>
+#include <errno.h>
+// page size is size of newly allocated memory. Once the memory is running out
+// of memory, the stack will automatically adjust its self and allocate another
+// page size memory
+#define page_size 100
 
 template<class V> Stack<V>::Stack () {
 	// size initialization
-	size = 1 ;
-	// stack pointer initialization
+	size = 0 ;
+	// stack pointer initialization start with a size of 100
 	try {
-		stackPointer = new V ;
+		stackPointer = new V[page_size] ;
 	} catch (std::bad_alloc& exc) {
 		return ;
 	}
@@ -14,39 +22,62 @@ template<class V> Stack<V>::Stack () {
 }
 
 template<class V> Stack<V>::~Stack () {
-	// scanner pointer
-	V* currV ;
-	// scanning through the entire stack
-	for ( currV = startPointer ; currV != stackPointer ; currV ++ ) 
-		delete currV ;
-	size = 0 ;
+	delete startPointer ;
 }
 
 template<class V> void Stack<V>::push (V value) {
-	// give the value of the v
-	*stackPointer = value ;
-	// move stack pointer to the next point
-	stackPointer++ ;
-	// allocate new memory for stack
-	try {
-		stackPointer = new V ;
-	} catch (std::bad_alloc& exc){
-		return ;
+	// required size
+	int provided_size = sizeof ( startPointer ) / sizeof ( V ) ;
+	// current size is not enough
+	if ( ( size + 1 ) > provided_size ) {
+		// resizing stack memory
+		try {
+			V* tmpPointer = new V[size + page_size] ;
+			memcpy ( tmpPointer, startPointer, size ) ;
+			delete startPointer ;
+			startPointer = tmpPointer ;
+		} catch (std::bad_alloc& exc) {
+			return ;
+		}
+		// free the original memory
+		stackPointer = startPointer + size ;
 	}
 	// size increase
 	size ++ ;
+	// increase the top of stack
+	stackPointer ++ ;
+	// add value to it
+	*stackPointer = value ;
 }
 
 template<class V> V Stack<V>::pop () {
-	// decrease the stack depth
-	stackPointer-- ;
-	// delete the previous location data
-	delete (stackPointer + 1);
-	// decrease stack size 
-	size -- ;
-	// give the return value
-	return *stackPointer ;
-	// the stack pointer pointed value is invalid, next push will over write it
+	if ( size == 0 ) {
+		perror ( "Stack fault: There is no elements in the stack to pop.\n" ) ;
+		return 0;
+	} else {
+		V returnValue = startPointer[size - 1] ;
+		// test if we can shrink the size of stack
+		if ((size - 1) % page_size == 0) {
+			try {
+				V* tmpPointer = new V[size - 1] ;
+				memcpy ( tmpPointer, startPointer, size - 1 ) ;
+				delete startPointer ;
+				startPointer = tmpPointer ;
+			} catch (std::bad_alloc& exc) {
+				return 0 ;
+			}
+			size -- ;
+			stackPointer = startPointer + size ;
+			return returnValue ;
+		}
+		// decrease the stack depth
+		stackPointer-- ;
+		// decrease stack size 
+		size -- ;
+		// give the return value
+		return *stackPointer ;
+		// the stack pointer pointed value is invalid, next push will over write it
+	}
 }
 
 template<class V> int Stack<V>::stackSize () {
