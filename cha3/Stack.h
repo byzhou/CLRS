@@ -1,22 +1,22 @@
-//#include<iostream>
-//using namespace std;
-//
-//template<class V> class stack {
-//	private:
-//		V		value ;
-//		int 	size ;
-//	public:
-//		stack () ;
-//		push (int d) ;
-//		pop () ;
-//};
 
 #ifndef STACK_H
 #define STACK_H
-class Stack {
+
+template<class V> class Stack {
+	private:
+		// stack start pointer, used as a reference pointer
+		V*		startPointer ;
+		// stack dynamic pointer, used as an end pointer
+		V*		stackPointer ;
+		// stack size
+		int		size ;
 	public:
 		Stack () ;
 		~Stack () ;
+		void push (V value) ;
+		V pop () ;
+		int stackSize () ;
 };
+
 #endif
 
