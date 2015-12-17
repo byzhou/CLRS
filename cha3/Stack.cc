@@ -14,10 +14,12 @@ template<class V> Stack<V>::Stack () {
 	size = 0 ;
 	// stack pointer initialization start with a size of 100
 	try {
-		stackPointer = new V[page_size] ;
+		stackPointer = new V[100] ;
 	} catch (std::bad_alloc& exc) {
 		return ;
 	}
+        printf ( "pagesize %d\n", page_size );
+        printf ( "size of startPointer %lu\n", sizeof ( startPointer ) / sizeof (V) ) ;
 	startPointer = stackPointer ;
 }
 
@@ -26,9 +28,9 @@ template<class V> Stack<V>::~Stack () {
 }
 
 template<class V> void Stack<V>::push (V value) {
-	// required size
+	// given size
 	int provided_size = sizeof ( startPointer ) / sizeof ( V ) ;
-	// current size is not enough
+	// if current size is not enough
 	if ( ( size + 1 ) > provided_size ) {
 		// resizing stack memory
 		try {
@@ -48,6 +50,8 @@ template<class V> void Stack<V>::push (V value) {
 	stackPointer ++ ;
 	// add value to it
 	*stackPointer = value ;
+    //printf ( "pushed value %d\n", *(int*)stackPointer ) ;
+    printf ( "size of the startPointer %d\n", provided_size ) ;
 }
 
 template<class V> V Stack<V>::pop () {
