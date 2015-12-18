@@ -8,8 +8,12 @@ template<class V> class Stack {
 		V*		startPointer ;
 		// stack dynamic pointer, used as an end pointer
 		V*		stackPointer ;
+		// some temporary pointer
+		V* 		tmpPointer ;
 		// stack size
 		int		size ;
+		// the memory that has already been allocated for the stack
+		int		alloc_size ;
 	public:
 		Stack () ;
 		~Stack () ;

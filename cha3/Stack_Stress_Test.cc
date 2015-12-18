@@ -10,7 +10,7 @@ int main ( int argc, char** argv ) {
 	 Stack<int> stack ;
 
 	 // push size checker
-	unsigned int i = 0x007FFFFF ;
+	unsigned int i = 0x0000000F ;
 	for ( ; i < 10000 ; i ++ ) {
 		stack.push (i) ;
 		if ( stack.stackSize() != i ) {
