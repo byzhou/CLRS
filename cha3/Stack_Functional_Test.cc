@@ -16,7 +16,8 @@ int main ( int argc, char** argv ) {
 		stack.push (i) ;
 		if ( stack.stackSize() != i ) {
 			//cerr << "stack size is wrong in push" << endl ;
-			//printf ( "i value is %d\n" , i ) ;
+			printf ( "i value is %d " , i ) ;
+			printf ( "stack memory size %d " , stack.stackMemorySize() ) ;
 			printf ( "Real stack size is %d\n", stack.stackSize() ) ;
 		}
 	}
@@ -24,15 +25,13 @@ int main ( int argc, char** argv ) {
 	// pop size checker
 	printf ( "Pop Process\n" ) ;
 	for ( ; i >= 0 ; i -- ) {
-		printf ( "i value is %d\n" , i ) ;
 		int popvalue = stack.pop() ;
-		printf ( "pop success\n" ) ;
 		if ( i != popvalue || i != ( stack.stackSize() + 1 ) ) {
 			//cerr << "stack size is wrong in pop" << endl ;
-			printf ( "popvalue value is %d\n" , popvalue ) ;
-			//printf ( "Real stack size is %d\n", stack.stackSize() ) ;
+			printf ( "pop_value value is %d " , popvalue ) ;
+			printf ( "stack memory size %d " , stack.stackMemorySize() ) ;
+			printf ( "Real stack size is %d\n", stack.stackSize() ) ;
 		}
 	}
-	 //stack.pop() ;
 }
 
