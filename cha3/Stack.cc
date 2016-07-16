@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <errno.h>
 
-template<class V> Stack<V>::Stack () {
+template<typename V> Stack<V>::Stack () {
 	// size initialization
 	size 					= 0 ;
 	allocated_memory_size 	= 0 ;
@@ -18,7 +18,7 @@ template<class V> Stack<V>::Stack () {
 	stackPointer	= startPointer ;
 }
 
-template<class V> Stack<V>::~Stack () {
+template<typename V> Stack<V>::~Stack () {
 	//delete[] startPointer ;
 	int i ;
 	// Since the size of my stack is been expended exponentionally, thus memory
@@ -31,7 +31,7 @@ template<class V> Stack<V>::~Stack () {
 	//delete startPointer;
 }
 
-template<class V> void Stack<V>::push (V value) {
+template<typename V> void Stack<V>::push (V value) {
 	V* tmpPointer;
 	if ( size == 0 ) {
 		try {
@@ -63,7 +63,7 @@ template<class V> void Stack<V>::push (V value) {
 	return;
 }
 
-template<class V> V Stack<V>::pop () {
+template<typename V> V Stack<V>::pop () {
 	
 	if (size == 0) {
 		perror ( "Stack fault: There is no elements in the stack to pop.\n" ) ;	
@@ -79,10 +79,10 @@ template<class V> V Stack<V>::pop () {
 
 }
 
-template<class V> int Stack<V>::stackSize () {
+template<typename V> int Stack<V>::stackSize () {
 	return size ;
 }
 
-template<class V> int Stack<V>::stackMemorySize () {
+template<typename V> int Stack<V>::stackMemorySize () {
 	return allocated_memory_size ;
 }

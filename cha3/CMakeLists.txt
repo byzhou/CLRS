@@ -5,6 +5,7 @@ project ( "cmake cha3" )
 enable_testing() 
 add_executable (Stack_Basic Stack_Functional_Test.cc Stack.cc)
 add_executable (Stack_Advance Stack_Stress_Test.cc Stack.cc)
+add_executable (Linked_List_Basic linked_list_functional_test.cc linked_list.cc)
 # test stack
 add_test(Stack_Functional_Test Stack_Basic)
 add_test(Stack_Stress_Test Stack_Advance)

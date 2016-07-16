@@ -2,7 +2,7 @@
 #ifndef STACK_H
 #define STACK_H
 
-template<class V> class Stack {
+template<typename V> class Stack {
 	private:
 		// stack start pointer, used as a reference pointer
 		V*		startPointer ;
